@@ -46,7 +46,7 @@ export default {
                 <p v-if="attackSelected.damage"><strong>Damage:</strong> {{ attackSelected.damage }}</p>
                 <p v-if="attackSelected.convertedEnergyCost"><strong>Converted Energy Cost:</strong> {{ attackSelected.convertedEnergyCost }}</p>
                 <div v-if="attackSelected.cost">
-                    <strong>Cost</strong>
+                    <strong>Cost:</strong>
                     <div class="costs">
                         <pokemon-type v-for="(cost, index) in attackSelected.cost" :type="cost" :key="index" />
                     </div>
