@@ -1,7 +1,7 @@
 <script>
 export default {
     props: {
-        pokemon: {
+        card: {
             type: Object
         }
     },
@@ -15,18 +15,18 @@ export default {
 
 
 <template>
-    <div class="card" @click="viewCard(pokemon.id)">
+    <div class="card" @click="viewCard(card.id)">
         
-        <img :src="pokemon.images.large" alt="">
-        <h3>{{pokemon.name}}</h3>
-        <p>{{ pokemon.id }}</p>
+        <img :src="card.images.large" alt="">
+        <h3>{{card.name}}</h3>
+        <p>{{ card.id }}</p>
         <div>
-            <span class="pokemon-type" v-for="tipo in pokemon.types" :key="tipo">{{ tipo }}</span>
+            <span class="pokemon-type" v-for="tipo in card.types" :key="tipo">{{ tipo }}</span>
         </div>
     </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
     @import "./../scss/_variables.scss";
 
     .card{
