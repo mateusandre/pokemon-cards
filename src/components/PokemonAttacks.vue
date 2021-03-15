@@ -42,7 +42,7 @@ export default {
             </div>
             <div v-if="attackSelected" class="modal-body">
                 <h1>{{ attackSelected.name }}</h1>
-                <p v-id="attackSelected.text">{{ attackSelected.text }}</p>
+                <p v-if="attackSelected.text">{{ attackSelected.text }}</p>
                 <p v-if="attackSelected.damage"><strong>Damage:</strong> {{ attackSelected.damage }}</p>
                 <p v-if="attackSelected.convertedEnergyCost"><strong>Converted Energy Cost:</strong> {{ attackSelected.convertedEnergyCost }}</p>
                 <div v-if="attackSelected.cost">
