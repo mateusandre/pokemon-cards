@@ -4,11 +4,13 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 import VueMobileDetection from 'vue-mobile-detection'
-import VueCarousel from 'vue-carousel';
+import VueCarousel from 'vue-carousel'
+import VModal from 'vue-js-modal'
 
 
 Vue.use(VueMobileDetection)
 Vue.use(VueCarousel)
+Vue.use(VModal)
 
 Vue.config.productionTip = false
 

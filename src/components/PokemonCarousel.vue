@@ -20,7 +20,7 @@ export default {
 
 <template>
     <div>
-        <carousel :centerMode="true" :perPage="1" :paginationEnabled="false" @page-change="pageChange">
+        <carousel :centerMode="false" :perPage="1" :paginationEnabled="false" @page-change="pageChange">
             <slide v-for="card in cards" :key="card.id">
                 <pokemon-card :card="card"></pokemon-card>
             </slide>

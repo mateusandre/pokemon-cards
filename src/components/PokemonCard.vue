@@ -1,13 +1,19 @@
 <script>
+
+import PokemonType from './PokemonType'
+
 export default {
     props: {
         card: {
             type: Object
         }
     },
+    components: {
+        PokemonType
+    },
     methods: {
         viewCard(id){
-            alert(id)
+            this.$router.push(`/card/${id}/details`)
         }
     }
 }
@@ -17,11 +23,11 @@ export default {
 <template>
     <div class="card" @click="viewCard(card.id)">
         
-        <img :src="card.images.large" alt="">
+        <img :src="card.images.small" alt="">
         <h3>{{card.name}}</h3>
         <p>{{ card.id }}</p>
         <div>
-            <span class="pokemon-type" v-for="tipo in card.types" :key="tipo">{{ tipo }}</span>
+            <PokemonType v-for="type in card.types" :type="type" :key="type" />
         </div>
     </div>
 </template>
@@ -44,15 +50,6 @@ export default {
             border-radius: 15px;
             padding: 0;
             width: 100%;
-        }
-
-        .pokemon-type{
-            background-color: #00BFA5;
-            color: #fff;
-            padding: 5px;
-            border-radius: 5px;
-            font-weight: bold;
-            font-size: 12px;
         }
     }
 

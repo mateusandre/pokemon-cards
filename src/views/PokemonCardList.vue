@@ -1,6 +1,8 @@
 <script>
 import PokemonCard from './../components/PokemonCard'
 import PokemonCarousel from './../components/PokemonCarousel'
+import Loading from './../components/Loading'
+import SearchCard from './../components/SearchCard'
 
 export default {
     name: 'PokemonCardList',
@@ -16,9 +18,6 @@ export default {
         page(){
             return this.$store.state.page
         },
-        loading(){ 
-            return this.$store.state.loading 
-        },
         query: {
             get () {
                 return this.$store.state.query
@@ -30,9 +29,11 @@ export default {
     },
     components: {
         PokemonCard,
-        PokemonCarousel
+        PokemonCarousel,
+        Loading,
+        SearchCard
     },
-    created(){
+    mounted(){
         window.addEventListener("resize", this.checkIfIsMobileDevice)
         this.$store.dispatch('getCards')
         this.scroll();
@@ -40,15 +41,12 @@ export default {
     methods: {        
         checkIfIsMobileDevice(){            
             this.isMobileDevice = this.$isMobile()
-        },
-        searchCards(){
-            this.$store.dispatch('searchCards')
-        },
+        },        
         scroll () {
             window.onscroll = () => {
                 let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight;
-
-                if (bottomOfWindow && !this.isMobileDevice) {
+                console.log(bottomOfWindow)
+                if (bottomOfWindow && !this.isMobileDevice && this.$route.path == '/' ) {
                     this.$store.dispatch('loadMoreCards')
                 }
             }
@@ -61,7 +59,7 @@ export default {
 <template>
     <div>
         <header>            
-            <input type="text" @keyup="searchCards" v-model="query" placeholder="Search by card name...">
+            <SearchCard />
         </header>        
         <section id="logo">
             <img alt="Vue logo" src="../assets/pokeball-color.png">
@@ -72,11 +70,10 @@ export default {
             <pokemon-carousel></pokemon-carousel>
         </section>
         <section id="cards-container" v-else key="desktop-cards">
-            <pokemon-card v-for="card in cards" :key="card.id" v-bind:card="card"></pokemon-card>
+            <pokemon-card v-for="(card, index) in cards" :key="index" v-bind:card="card"></pokemon-card>
         </section>
 
-
-        <h1 v-if="loading && !isMobileDevice"><img src="../assets/pokeball-loading-unscreen.gif"></h1>
+    <Loading v-if="!isMobileDevice" />
     </div>
 </template>
 
@@ -100,7 +97,7 @@ export default {
         top: 0;
         
         input{
-            width: 50%;
+            width: 70%;
             height: 20px;
             padding: 10px;
             border-radius: 5px;

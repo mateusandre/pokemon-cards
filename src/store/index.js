@@ -10,14 +10,8 @@ export default new Vuex.Store({
     loading: false,
     page: 1,
     query: '',
-    pageSize: 10
-  },
-  getters: {
-    card: state => {
-      return (id) => {
-        return state.cards.find(x => x.id == id)
-      }
-    }
+    pageSize: 30,
+    card: null
   },
   mutations: {    
     setLoading(state, data){
@@ -28,9 +22,8 @@ export default new Vuex.Store({
     },
     pushCards(state, data){
 
-      data.forEach(element => {
-        if (!state.cards.find(x => x.id == element.id))
-          state.cards.push(element)
+      data.forEach(element => {        
+        state.cards.push(element)
       })
 
     },
@@ -42,18 +35,24 @@ export default new Vuex.Store({
     },
     setQuery(state, data){
       state.query = data
+    },
+    setCard(state, data){
+      state.card = data
     }
   },
   actions: {
     async getCards(context, push = false){
 
-      await context.commit('setLoading', true)
+      context.commit('setLoading', true)
+
+      if (!push)
+        context.commit('setPage', 1)
 
       let result = await CardsService.get({ 
-        pageSize: 10, 
+        pageSize: context.state.pageSize, 
         page: context.state.page, 
         orderBy: 'name',  
-        q: `name:*${ context.state.query }*`
+        q: `name:*${ context.state.query }* supertype:pokemon`
       })
 
       if (push)
@@ -61,7 +60,7 @@ export default new Vuex.Store({
       else
         context.commit('setCards', result.data.data)
 
-      await context.commit('setLoading', false)
+      context.commit('setLoading', false)
     },
     searchCards(context){
       context.commit('setPage', 1)
@@ -77,6 +76,12 @@ export default new Vuex.Store({
         context.dispatch('getCards', true)
 
       }
+    },
+    async getCard(context, id){
+      context.commit('setLoading', true)
+      let result = await CardsService.getById(id)
+      context.commit('setCard', result.data.data)
+      context.commit('setLoading', false)
     }
   }
 })

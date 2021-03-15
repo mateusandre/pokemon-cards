@@ -6,11 +6,10 @@ export default class Api {
     }
 
     async get(params){        
-        var data = await this.$http.get(null, {params: params })
-        return data
+        return await this.$http.get(null, {params: params })
     }
 
     async getById(id){
-        await this.$http.get(id)
+        return await this.$http.get(id)
     }
 }
