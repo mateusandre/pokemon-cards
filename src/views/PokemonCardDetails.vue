@@ -101,6 +101,7 @@ export default {
                 width: 100%;
                 margin-top: 25px;
                 background-color: $primary-color;
+                border-radius: 20px;
             }
         }
     }
