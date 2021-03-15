@@ -15,8 +15,8 @@ export default {
         cards(){
             return this.$store.state.cards
         },
-        page(){
-            return this.$store.state.page
+        loading(){
+            return this.$store.state.loading
         },
         query: {
             get () {
@@ -71,6 +71,10 @@ export default {
         </section>
         <section id="cards-container" v-else key="desktop-cards">
             <pokemon-card v-for="(card, index) in cards" :key="index" v-bind:card="card"></pokemon-card>
+        </section>
+
+        <section v-if="cards.length == 0 && !loading">
+            <h3>Sorry. we can't find any card.</h3>
         </section>
 
     <Loading v-if="!isMobileDevice" />

@@ -22,8 +22,9 @@ export default new Vuex.Store({
     },
     pushCards(state, data){
 
-      data.forEach(element => {        
-        state.cards.push(element)
+      data.forEach(element => {   
+        if (!state.cards.find(x => x.id == element.id))
+          state.cards.push(element)
       })
 
     },
