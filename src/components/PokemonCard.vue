@@ -3,6 +3,7 @@
 import PokemonType from './PokemonType'
 
 export default {
+    name: 'PokemonCard',
     props: {
         card: {
             type: Object
@@ -21,7 +22,7 @@ export default {
 
 
 <template>
-    <div class="card" @click="viewCard(card.id)">
+    <div v-if="card" class="card" @click="viewCard(card.id)">
         
         <img :src="card.images.small" alt="">
         <h3>{{card.name}}</h3>

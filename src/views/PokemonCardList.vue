@@ -15,9 +15,6 @@ export default {
         cards(){
             return this.$store.state.cards
         },
-        page(){
-            return this.$store.state.page
-        },
         loading(){
             return this.$store.state.loading
         },

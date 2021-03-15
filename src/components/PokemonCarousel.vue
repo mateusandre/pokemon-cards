@@ -4,6 +4,7 @@ import PokemonCard from './PokemonCard'
 import Loading from './Loading'
 
 export default {
+    name: 'PokemonCarousel',
     data(){
         return {
             currentPage: 0
@@ -29,10 +30,10 @@ export default {
 
 <template>
     <div>
-        <p class="slide-indicators" v-if="cards.length > 0"><span v-if="currentPage > 0">&larr;</span> Slide to &rarr;</p>
-        <loading />
-        <carousel :centerMode="false" :perPage="1" :paginationEnabled="false" @page-change="pageChange">
-            <slide v-for="card in cards" :key="card.id">
+        <p class="slide-indicators" v-if="cards.length > 0"><span class="arrow-left" v-if="currentPage > 0">&larr;</span> Slide to &rarr;</p>
+        <loading ref="loading" />
+        <carousel ref="carousel" :centerMode="false" :perPage="1" :paginationEnabled="false" @page-change="pageChange">
+            <slide v-for="(card, index) in cards" :key="index">
                 <pokemon-card v-if="!loading" :card="card"></pokemon-card>
             </slide>
         </carousel>
