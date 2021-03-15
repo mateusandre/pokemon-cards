@@ -6,46 +6,77 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    pokemons: [],
+    cards: [],
     loading: false,
-    page: 1
+    page: 1,
+    query: '',
+    pageSize: 10
   },
   getters: {
-    pokemons: state => {
-      return state.pokemons.data || []
-    },
-    pokemon: state => {
+    card: state => {
       return (id) => {
-        return state.pokemons.find(x => x.id == id)
+        return state.cards.find(x => x.id == id)
       }
     }
   },
-  mutations: {
+  mutations: {    
     setLoading(state, data){
       state.loading = data
     },
-    setPokemons(state, data){
-      state.pokemons = data
+    setCards(state, data){
+      state.cards = data
+    },
+    pushCards(state, data){
+
+      data.forEach(element => {
+        if (!state.cards.find(x => x.id == element.id))
+          state.cards.push(element)
+      })
+
     },
     setPage(state, data){
       state.page = data
+    },
+    setPageSize(state, data){
+      state.pageSize = data
+    },
+    setQuery(state, data){
+      state.query = data
     }
   },
   actions: {
-    async getPokemons(context, data = {}){
-      if(data.page)
-        context.commit('setPage', data.page)
-      context.commit('setLoading', true)
+    async getCards(context, push = false){
+
+      await context.commit('setLoading', true)
+
       let result = await CardsService.get({ 
         pageSize: 10, 
         page: context.state.page, 
         orderBy: 'name',  
-        q: data.name ? `name:*${ data.name }*` : ''
+        q: `name:*${ context.state.query }*`
       })
-      context.commit('setPokemons', result.data)
-      context.commit('setLoading', false)
-    }    
-  },
-  modules: {
+
+      if (push)
+        context.commit('pushCards', result.data.data)
+      else
+        context.commit('setCards', result.data.data)
+
+      await context.commit('setLoading', false)
+    },
+    searchCards(context){
+      context.commit('setPage', 1)
+      context.commit('setCards', [])
+      context.dispatch('getCards')
+    },
+    loadMoreCards(context){
+
+      if (!context.state.loading) {
+
+        context.commit('setLoading', true)        
+        context.commit('setPage', context.state.page + 1)
+        context.dispatch('getCards', true)
+
+      }
+    }
   }
 })

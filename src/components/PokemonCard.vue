@@ -30,8 +30,7 @@ export default {
     @import "./../scss/_variables.scss";
 
     .card{
-        width: 25%;
-        max-width: 230px;
+        width: 255px;
         margin: 15px;
         cursor: pointer;
         padding: 15px;        

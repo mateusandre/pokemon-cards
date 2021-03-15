@@ -6,21 +6,30 @@ export default {
     name: 'PokemonCardList',
     data(){
         return {
-            isMobileDevice: this.$isMobile(),
-            searchTerm: null
+            isMobileDevice: this.$isMobile()
         }
     },
     computed: {
         visualizationComponent(){
             return this.isMobileDevice ? 'Carousel' : 'PokemonCard'
         },
-        pokemons(){
-            return this.$store.getters.pokemons
+        cards(){
+            return this.$store.state.cards
         },
         page(){
             return this.$store.state.page
         },
-        loading(){ return this.$store.state.loading }
+        loading(){ 
+            return this.$store.state.loading 
+        },
+        query: {
+            get () {
+                return this.$store.state.query
+            },
+            set (value) {
+                this.$store.commit('setQuery', value)
+            }
+        }
     },
     components: {
         PokemonCard,
@@ -28,15 +37,25 @@ export default {
     },
     created(){
         window.addEventListener("resize", this.checkIfIsMobileDevice)
-        this.$store.dispatch('getPokemons')
+        this.$store.dispatch('getCards')
+        this.scroll();
     },
     methods: {        
         checkIfIsMobileDevice(){            
             this.isMobileDevice = this.$isMobile()
         },
-        searchPokemons(){
-            this.$store.dispatch('getPokemons', { page: 1, name: this.searchTerm })
-        }
+        searchCards(){
+            this.$store.dispatch('searchCards')
+        },
+        scroll () {
+            window.onscroll = () => {
+                let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight;
+
+                if (bottomOfWindow) {
+                    this.$store.dispatch('loadMoreCards')
+                }
+            }
+        },
     } 
 }
 
@@ -47,12 +66,12 @@ export default {
         <header>
             <img alt="Vue logo" src="../assets/pokeball.png">
             <h1>Pokémon Cards</h1>
-            <input type="text" @keyup="searchPokemons" v-model="searchTerm" placeholder="Search by card name...">
+            <input type="text" @keyup="searchCards" v-model="query" placeholder="Search by card name...">
         </header>
         <section id="cards-container">
-            <component v-for="pokemon in pokemons" :key="pokemon.id" v-bind:pokemon="pokemon" :is="visualizationComponent"></component>
-            <h1 v-if="loading">Carregando...</h1>
+            <component v-for="card in cards" :key="card.id" v-bind:pokemon="card" :is="visualizationComponent"></component>
         </section>
+        <h1 v-if="loading">Carregando...</h1>
     </div>
 </template>
 
@@ -96,12 +115,8 @@ export default {
     }
     #cards-container{
         display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        align-items: flex-start;
         flex-wrap: wrap;
-        max-width: 1800px;        
+        max-width: 1900px;        
         margin: $cards-container-margin-top auto;
-        padding: 20px;
     }
 </style>
