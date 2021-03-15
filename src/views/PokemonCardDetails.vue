@@ -33,49 +33,57 @@ export default {
 </script>
 
 <template>
-    <div id="card-details">
-        <CustomButton @click="goBack">&larr; Back to list</CustomButton>
-
+    <div>
+        <div class="back-button-container">
+            <CustomButton @click="goBack">&larr; Back to list</CustomButton>
+        </div>
         <Loading />
+        <div id="card-details">
 
-        <section v-if="card && !loading">
-            <img :src="card.images.large" alt="">
 
-            <section>
-                <h3><strong>Name:</strong> {{ card.name }}</h3>
-                <div><strong>Id:</strong> {{ card.id }}</div>
-                <p><strong>types:</strong> <PokemonType v-for="type in card.types" :type="type" :key="type" /></p>
-                <div v-if="card.resistances">
-                    <strong>Resistances</strong> 
-                    <list :list="card.resistances">
-                        <template v-slot:default="slotProps">
-                            <strong>{{ slotProps.item.type}}:</strong> {{ slotProps.item.value }}                    
-                        </template>
-                    </list>
-                </div>
-                <div v-if="card.weaknesses">
-                    <strong>Weaknesses:</strong>
-                    <list :list="card.weaknesses">
-                        <template v-slot:default="slotProps">
-                            <strong>{{ slotProps.item.type}}:</strong> {{ slotProps.item.value }}                    
-                        </template>
-                    </list>
+            <section v-if="card && !loading">
+                <img :src="card.images.large" alt="">
+
+                <section>
+                    <h3><strong>Name:</strong> {{ card.name }}</h3>
+                    <div><strong>Id:</strong> {{ card.id }}</div>
+                    <p><strong>types:</strong> <PokemonType v-for="type in card.types" :type="type" :key="type" /></p>
+                    <div v-if="card.resistances">
+                        <strong>Resistances</strong> 
+                        <list :list="card.resistances">
+                            <template v-slot:default="slotProps">
+                                <strong>{{ slotProps.item.type}}:</strong> {{ slotProps.item.value }}                    
+                            </template>
+                        </list>
                     </div>
-                <div v-if="card.attacks">
-                    <p><strong>Attacks</strong></p>
-                    <PokemonAttacks :attacks="card.attacks" />
-                </div>
-            </section>
+                    <div v-if="card.weaknesses">
+                        <strong>Weaknesses:</strong>
+                        <list :list="card.weaknesses">
+                            <template v-slot:default="slotProps">
+                                <strong>{{ slotProps.item.type}}:</strong> {{ slotProps.item.value }}                    
+                            </template>
+                        </list>
+                        </div>
+                    <div v-if="card.attacks">
+                        <p><strong>Attacks</strong></p>
+                        <PokemonAttacks :attacks="card.attacks" />
+                    </div>
+                </section>
 
-        </section>        
+            </section>        
+        </div>
     </div>
 </template>
 
 <style lang="scss" scoped>
     @import "./../scss/_variables.scss";
 
+    .back-button-container{
+        padding: 15px 15px 0 15px;
+        text-align: left;
+    }
     #card-details{
-        padding: 15px;
+        padding: 0 15px 15px 15px;
         text-align: left;
 
         h1{
@@ -92,6 +100,7 @@ export default {
             img{
                 width: 100%;
                 margin-top: 25px;
+                background-color: $primary-color;
             }
         }
     }

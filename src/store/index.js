@@ -10,7 +10,7 @@ export default new Vuex.Store({
     loading: false,
     page: 1,
     query: '',
-    pageSize: 2,
+    pageSize: 20,
     card: null
   },
   mutations: {    
