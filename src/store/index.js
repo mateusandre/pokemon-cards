@@ -43,25 +43,30 @@ export default new Vuex.Store({
   },
   actions: {
     async getCards(context, push = false){
+      try{
+        context.commit('setLoading', true)
+  
+        if (!push)
+          context.commit('setPage', 1)
+  
+        let result = await CardsService.get({ 
+          pageSize: context.state.pageSize, 
+          page: context.state.page, 
+          orderBy: 'name',  
+          q: `name:"*${ context.state.query }*" supertype:pokemon`
+        })
+  
+        if (push)
+          context.commit('pushCards', result.data.data)
+        else
+          context.commit('setCards', result.data.data)
+  
+        context.commit('setLoading', false)
 
-      context.commit('setLoading', true)
-
-      if (!push)
-        context.commit('setPage', 1)
-
-      let result = await CardsService.get({ 
-        pageSize: context.state.pageSize, 
-        page: context.state.page, 
-        orderBy: 'name',  
-        q: `name:*${ context.state.query }* supertype:pokemon`
-      })
-
-      if (push)
-        context.commit('pushCards', result.data.data)
-      else
-        context.commit('setCards', result.data.data)
-
-      context.commit('setLoading', false)
+      }
+      catch(error){
+        context.commit('setCards', [])
+      }
     },
     searchCards(context){
       context.commit('setPage', 1)
