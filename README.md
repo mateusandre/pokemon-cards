@@ -1,4 +1,7 @@
 # pokemon-cards
+Visit deployed version here: [https://pokemon-cards-7e725.web.app/](https://pokemon-cards-7e725.web.app/)
+
+Vue.js app using the Pokémon TCG API [https://pokemontcg.io/](https://pokemontcg.io/)
 
 ## Project setup
 ```
