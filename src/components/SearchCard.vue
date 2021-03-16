@@ -10,8 +10,8 @@ export default {
             }
         }
     },
-    methods: {
-        searchCards(){
+    watch: {
+        query(){
             this.$store.dispatch('searchCards')
         }
     }
@@ -19,5 +19,5 @@ export default {
 </script>
 
 <template>
-    <input type="text" v-model="query" @input="searchCards" :placeholder="$t('searchPlaceholder')">
+    <input type="text" v-model="query" :placeholder="$t('searchPlaceholder')">
 </template>
