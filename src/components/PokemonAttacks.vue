@@ -34,7 +34,7 @@ export default {
             </template>
         </List>
 
-        <modal name="attack-details" :adaptive="true" :clickToClose="true" width="90%" :scrollable="true">
+        <modal name="attack-details" :clickToClose="true" width="90%" :scrollable="true">
              <div slot="top-right">
                 <button @click="$modal.hide('attack-details')">
                     X
