@@ -35,7 +35,7 @@ export default {
 <template>
     <div>
         <div class="back-button-container">
-            <CustomButton @click="goBack">&larr; Back to list</CustomButton>
+            <CustomButton @click="goBack">&larr; {{ $t('backToList') }}</CustomButton>
         </div>
         <Loading />
         <div id="card-details">
@@ -45,11 +45,11 @@ export default {
                 <img :src="card.images.large" alt="">
 
                 <section>
-                    <h3><strong>Name:</strong> {{ card.name }}</h3>
+                    <h3><strong>{{$t('name')}}:</strong> {{ card.name }}</h3>
                     <div><strong>Id:</strong> {{ card.id }}</div>
-                    <p><strong>types:</strong> <PokemonType v-for="type in card.types" :type="type" :key="type" /></p>
+                    <p><strong>{{$t('types')}}:</strong> <PokemonType v-for="type in card.types" :type="type" :key="type" /></p>
                     <div v-if="card.resistances">
-                        <strong>Resistances</strong> 
+                        <strong>{{ $t('resistances') }}</strong> 
                         <list :list="card.resistances">
                             <template v-slot:default="slotProps">
                                 <strong>{{ slotProps.item.type}}:</strong> {{ slotProps.item.value }}                    
@@ -57,7 +57,7 @@ export default {
                         </list>
                     </div>
                     <div v-if="card.weaknesses">
-                        <strong>Weaknesses:</strong>
+                        <strong>{{$t('weaknesses')}}:</strong>
                         <list :list="card.weaknesses">
                             <template v-slot:default="slotProps">
                                 <strong>{{ slotProps.item.type}}:</strong> {{ slotProps.item.value }}                    
@@ -65,7 +65,7 @@ export default {
                         </list>
                         </div>
                     <div v-if="card.attacks">
-                        <p><strong>Attacks</strong></p>
+                        <p><strong>{{$t('attacks')}}</strong></p>
                         <PokemonAttacks :attacks="card.attacks" />
                     </div>
                 </section>

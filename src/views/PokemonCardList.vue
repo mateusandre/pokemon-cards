@@ -63,7 +63,7 @@ export default {
         </header>        
         <section id="logo">
             <img alt="Vue logo" src="../assets/pokeball-color.png">
-            <h1>Pokémon Cards</h1>
+            <h1>{{ $t('appName') }}</h1>
         </section>
 
         <section v-if="isMobileDevice" key="mobile-cards">

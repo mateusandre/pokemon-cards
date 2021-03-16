@@ -30,7 +30,7 @@ export default {
 
 <template>
     <div>
-        <p class="slide-indicators" v-if="cards.length > 0"><span class="arrow-left" v-if="currentPage > 0">&larr;</span> Slide to &rarr;</p>
+        <p class="slide-indicators" v-if="cards.length > 0"><span class="arrow-left" v-if="currentPage > 0">&larr;</span> {{ $t('slideTo') }} &rarr;</p>
         <loading ref="loading" />
         <carousel ref="carousel" :centerMode="false" :perPage="1" :paginationEnabled="false" @page-change="pageChange">
             <slide v-for="(card, index) in cards" :key="index">

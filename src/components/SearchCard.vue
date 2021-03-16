@@ -19,5 +19,5 @@ export default {
 </script>
 
 <template>
-    <input type="text" v-model="query" @input="searchCards" placeholder="Search by card name...">
+    <input type="text" v-model="query" @input="searchCards" :placeholder="$t('searchPlaceholder')">
 </template>
